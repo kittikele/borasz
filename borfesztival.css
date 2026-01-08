@@ -1,0 +1,61 @@
+html{
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+}
+body{
+    background-image: url('alma.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+
+}
+h1{
+    text-align: center;
+    
+}
+#content{
+    width: 33.33%;
+    margin: auto;
+    background-color: rgba(255, 235, 205, 0.712);
+    padding: 5px;
+    font-size: large;
+    border-radius: 25px;
+    box-shadow: 0 2px 100px tomato;
+}
+table{
+    text-align: center;
+    margin: auto;
+    border: 1px solid black;
+}
+td, th{
+    padding: 10px;
+    border: 1px solid black;
+}
+th{
+    font-size: 1.5rem;
+}
+button{
+    font-size: 1.3rem;
+    background-color: darksalmon;
+    border: 1px solid black;
+}
+button:hover{
+    font-size: 1.4rem;
+}
+#gom{
+    border: none;
+    width: 50%;
+}
+#gom tr td{
+    border: none;
+}
+input{
+    font-size: 1.1rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+input:focus{
+    background-color: rgb(253, 215, 201);
+}

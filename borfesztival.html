@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="borfesztival.css" />
+    <title>Borfesztivál résztvevői (borászatok)</title>
+  </head>
+
+  <body>
+    <div id="content">
+      <h1>Borfesztivál résztvevői (borászatok)</h1>
+      <div id="cc">
+        <!-- <div id="boraszok"></div> -->
+        <table>
+          <tr>
+            <th colspan="2">Borászatok</th>
+          </tr>
+        </table>
+        <table id="gom">
+          <tr>
+            <td>
+              <input type="text" id="hozzaadando" placeholder="Borász neve" />
+              <div id="hiba1" style="color: red; font-size: 14px"></div>
+            </td>
+            <td><button id="hozzaadas">Hozzáadás</button></td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" id="amit" placeholder="Módosítandó borász" />
+              <input type="text" id="amire" placeholder="Új borász" />
+              <div id="hiba2" style="color: red; font-size: 14px"></div>
+            </td>
+            <td><button id="modositas">Módosítás</button></td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" id="torlendo" placeholder="Törlendő borász" />
+              <div id="hiba3" style="color: red; font-size: 14px"></div>
+            </td>
+            <td><button id="torles">Törlés</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script>
+    const hozzaadasGomb = document.getElementById("hozzaadas");
+    const modositasGomb = document.getElementById("modositas");
+    const torlesGomb = document.getElementById("torles");
+    const table = document.querySelector("table");
+
+    let boraszok_lista = [
+      {
+        name: "Várszegi Pince",
+      },
+      {
+        name: "Nyári Pince Hegymagas",
+      },
+      {
+        name: "Kovács Nimród Winery Eger",
+      },
+      {
+        name: "Chateau Pajzos és Chateau Megyer Sárospatak",
+      },
+      {
+        name: "GOBRI Pince Gyöngyöstarján",
+      },
+      {
+        name: "Podmaniczky Szőlőbirtok és Pince Balatonföldvár",
+      },
+      {
+        name: "Debreczeni Pincészet Csabdi",
+      },
+      {
+        name: "H&V Pinczészet Muzsla Muzsla",
+      },
+    ];
+
+    boraszIras();
+
+    hozzaadasGomb.addEventListener("click", () => {
+      const hozzaadando_input = document
+        .getElementById("hozzaadando")
+        .value.trim();
+      const hiba1 = document.getElementById("hiba1");
+
+      for (let borasz of boraszok_lista) {
+        if (borasz.name.toLowerCase() == hozzaadando_input.toLowerCase()) {
+          hiba1.innerHTML = "Ez a borászat már szerepel a listában!";
+          return;
+        }
+      }
+
+      if (hozzaadando_input != "") {
+        boraszok_lista.push({ name: hozzaadando_input });
+      } else {
+        hiba1.innerHTML = "Adjon meg egy borászatot!";
+        return;
+      }
+
+      boraszIras();
+    });
+
+    modositasGomb.addEventListener("click", () => {
+      const amit_input = document.getElementById("amit").value;
+      const amire_input = document.getElementById("amire").value;
+      const hiba2 = document.getElementById("hiba2");
+      let talalt = false;
+
+      if (amit_input != "" || amire_input != "") {
+        for (let nev in boraszok_lista) {
+          if (boraszok_lista[nev].name === amit_input) {
+            boraszok_lista[nev].name = amire_input;
+            talalt = true;
+          }
+        }
+        if (!talalt) {
+          hiba2.innerHTML = "Nincs ilyen borászat a listában!";
+          return;
+        }
+      } else {
+        hiba2.innerHTML = "Minden mezőt ki kell tölteni!";
+        return;
+      }
+
+      boraszIras();
+    });
+
+    torlesGomb.addEventListener("click", () => {
+      const torlendo_input = document.getElementById("torlendo").value;
+      let talalt = false;
+
+      if (torlendo_input != "") {
+        for (let nev in boraszok_lista) {
+          if (boraszok_lista[nev].name === torlendo_input) {
+            delete boraszok_lista[nev];
+            talalt = true;
+          }
+        }
+        if (!talalt) {
+          hiba3.innerHTML = "Nincs ilyen borászat a listában!";
+          return;
+        }
+      } else {
+        hiba3.innerHTML = "Adjon meg egy borászatot!";
+        return;
+      }
+      boraszIras();
+    });
+
+    function boraszIras() {
+      while (table.rows.length > 1) {
+        table.deleteRow(-1);
+      }
+      let i = 1;
+      for (let nev in boraszok_lista) {
+        const row = table.insertRow(-1);
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        cell2.innerHTML = boraszok_lista[nev].name;
+        cell1.innerHTML = i + ".";
+        i++;
+      }
+      inputUres();
+    }
+
+    function inputUres() {
+      const hozzaadando_input = document.getElementById("hozzaadando");
+      const amit_input = document.getElementById("amit");
+      const amire_input = document.getElementById("amire");
+      const torlendo_input = document.getElementById("torlendo");
+      hozzaadando_input.value =
+        amit_input.value =
+        amire_input.value =
+        torlendo_input.value =
+          "";
+      document.getElementById("hiba1").innerHTML = "";
+      document.getElementById("hiba2").innerHTML = "";
+      document.getElementById("hiba3").innerHTML = "";
+    }
+  </script>
+</html>
